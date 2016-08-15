@@ -2,6 +2,10 @@
 
 An adorable Commodore 64 desktop ornament. Blog post [here](http://johan.kanflo.com/the-commadorable-64/).
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kanflo/commadorable-64/master/commodorable_64.png" alt="The Commadorable 64"/>
+</p>
+
 **Howto**
 
 
