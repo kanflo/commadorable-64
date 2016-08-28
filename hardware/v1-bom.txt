@@ -1,0 +1,30 @@
+BOM for Commadoraboe 64 with and without touch
+
+Part Value       Package           Description
+------------------------------------------------------------------------------
+C1   1uF         0603              Capacitor
+C2   0.1uF       0603              Capacitor
+C3   1uF         0603              Capacitor
+C4   10uF        0603              Capacitor
+C5   0.1uF       0603              Capacitor
+G1               SOD-123FL         SCHOTTKY DIODE
+J1               1x14              Standard 15-pin 0.1" header
+JP1              1X02              Standard 2-pin 0.1" header
+JP2, JP3         1X01              For mounting support on C64 touch variant
+Q2               SOT23-3           MOSFET-PCHANNEL
+R1   4k7         R0603             Resistor
+R2   4k7         R0603             Resistor
+R3   4k7         R0603             Resistor
+R4   4k7         R0603             Resistor
+R5   4k7         R0603             Resistor
+R6   220k        R0603             Resistor
+R7   100k        R0603             Resistor
+S1               Tactile switch    3x6x2.5mm tactile switch from eBay
+U1   3.3V        SOT223            NCP1117
+U2               ESP-12E           ESP12e module
+X1                                 Micro USB through hole connector from eBay
+X2                                 Vertical micro USB through hole connector from eBay
+X3                                 ESPROG (pads included on PCB, no mounting needed)
+
+Please see http://johan.kanflo.com/the-commadorable-64/ for links to the
+switch and USB connectors.
