@@ -47,10 +47,10 @@ extern "C" {
 
 #define ADC_BUTTON_PRESSED (1000) // adc > ADC_BUTTON_PRESSED when button pressed
 
-xSemaphoreHandle gTFTSemaphore;
+SemaphoreHandle_t gTFTSemaphore;
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
-#define delay_ms(ms) vTaskDelay(ms / portTICK_RATE_MS)
+#define delay_ms(ms) vTaskDelay(ms / portTICK_PERIOD_MS)
 
 extern "C" {
 
@@ -93,7 +93,7 @@ static void bmp_draw(uint8_t *bmp, uint16_t x, uint16_t y)
     uint32_t pos = 0;
     uint32_t img_size;
 
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -189,7 +189,7 @@ void init_cmd(uint32_t argc, char *argv[])
     SPI_FREQ_DIV_20M  < 20MHz
     */
 
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -227,7 +227,7 @@ void fill_cmd(uint32_t argc, char *argv[])
     if (strlen(argv[1]) != 7) {
         printf("Express color as #rrggbb\n");
     } else {
-        if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+        if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
             printf("Timeout acquiring TFT semaphore\n");
             return;
         }
@@ -247,7 +247,7 @@ void fill_cmd(uint32_t argc, char *argv[])
 
 void text_cmd(uint32_t argc, char *argv[])
 {
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -263,7 +263,7 @@ void text_cmd(uint32_t argc, char *argv[])
 
 void text_size_cmd(uint32_t argc, char *argv[])
 {
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -273,7 +273,7 @@ void text_size_cmd(uint32_t argc, char *argv[])
 
 void cls_cmd(uint32_t argc, char *argv[])
 {
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -284,7 +284,7 @@ void cls_cmd(uint32_t argc, char *argv[])
 
 void on_cmd(uint32_t argc, char *argv[])
 {
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -299,7 +299,7 @@ void on_cmd(uint32_t argc, char *argv[])
 
 void off_cmd(uint32_t argc, char *argv[])
 {
-    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_RATE_MS) == pdFALSE) {
+    if (xSemaphoreTake(gTFTSemaphore, 500 / portTICK_PERIOD_MS) == pdFALSE) {
         printf("Timeout acquiring TFT semaphore\n");
         return;
     }
@@ -376,8 +376,8 @@ void cli_task(void *pvParameters)
     init_cmd(0, 0);
     draw_bmp_cmd(0, 0);
     gpio_write(TFT_LED, false);
-    xTaskCreate(cursor_task, (signed char *)"cursor_task", 512, NULL, 2, NULL);
-    xTaskCreate(button_task, (signed char *)"button_task", 512, NULL, 2, NULL);
+    xTaskCreate(cursor_task, "cursor_task", 512, NULL, 2, NULL);
+    xTaskCreate(button_task, "button_task", 512, NULL, 2, NULL);
     cli_run(cmds, sizeof(cmds) / sizeof(command_t), "Commadorable 64");
 }
 
@@ -399,7 +399,7 @@ void user_init(void)
     sdk_wifi_station_set_config(&config);
 #endif // CONFIG_NO_WIFI
 
-    xTaskCreate(cli_task, (signed char *)"cli_task", 512, NULL, 2, NULL);
+    xTaskCreate(cli_task, "cli_task", 512, NULL, 2, NULL);
 }
 
 } // extern "C"
