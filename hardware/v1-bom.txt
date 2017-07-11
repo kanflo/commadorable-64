@@ -1,5 +1,9 @@
 BOM for Commadoraboe 64 with and without touch
 
+v1-22/        2.2" version without touch
+v1-24-touch/  2.4" version with touch
+v1-28-touch/  2.8" version with touch
+
 Part Value       Package           Description
 ------------------------------------------------------------------------------
 C1   1uF         0603              Capacitor
