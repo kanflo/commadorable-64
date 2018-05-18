@@ -3,6 +3,7 @@
 #include <Adafruit_ILI9341.h>
 #include <Adafruit_GFX.h>
 #include <FS.h>
+// XPT2046 Lib @  https://github.com/spapadim/XPT2046
 #include <XPT2046.h>
 
 
